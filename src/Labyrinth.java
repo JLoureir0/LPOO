@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Labyrinth {
 	
-	private static Board board = new Board();
+	private static Board board = new Board(20);
 	private static Character hero = new Character(board.charXPos('H'),board.charYPos('H'),'H');
 	private static Character dragon = new Character(board.charXPos('D'),board.charYPos('D'),'D');
 	private static boolean win = false;
@@ -30,6 +30,8 @@ public class Labyrinth {
 				switch(dragonNextMove) {
 				case 0:
 					moveChar(dragon,'w');
+					
+					
 					break;
 				case 1:
 					moveChar(dragon,'a');
