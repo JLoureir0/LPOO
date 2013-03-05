@@ -19,10 +19,6 @@ public class Board {
 	
 	public Board(int n, int howManyDragons) {
 		BoardGenerator random = new BoardGenerator();
-		if(n < 10)
-			n = 10;
-		if(howManyDragons > (n/5))
-			howManyDragons = n/5;
 		board = random.nextBoard(n,howManyDragons);
 
 	}

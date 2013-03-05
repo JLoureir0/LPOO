@@ -21,7 +21,7 @@ public class Game {
 			boardSize = 10;
 		}
 		
-		System.out.print("Quantos dragões em campo(max. TamanhoTabuleiro/5): ");
+		System.out.print("Quantos dragões em campo(max. (NxN)/50): ");
 		
 		try {
 			howManyDragons = Integer.valueOf(s.nextLine());

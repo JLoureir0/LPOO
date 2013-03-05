@@ -12,6 +12,11 @@ public class Labyrinth {
 	private boolean win;
 	
 	public Labyrinth(int boardSize, int howManyDragons, int dragonMoveType) {
+		if(boardSize < 10)
+			boardSize = 10;
+		if(howManyDragons > (boardSize*boardSize/50) || howManyDragons < 1)
+			howManyDragons = boardSize*boardSize/50;
+		
 		board = new Board(boardSize, howManyDragons);
 		
 		dragons = new Dragon[howManyDragons];
