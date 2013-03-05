@@ -13,6 +13,7 @@ public class Labyrinth {
 	
 	private static Board board;
 	private static Hero hero;
+
 	private static boolean win = false;
 	
 
@@ -22,20 +23,33 @@ public class Labyrinth {
 		Scanner s = new Scanner(System.in);
 		Random r = new Random();
 		System.out.print("Qual o tamanho para o tabuleiro (min. 10): ");
-		boardSize = Integer.valueOf(s.nextLine());
+		
+		try {
+			boardSize = Integer.valueOf(s.nextLine());
+		}catch(Exception e) {
+			boardSize = 10;
+		}
+		
 		System.out.print("Quantos dragões em campo(max. TamanhoTabuleiro/5): ");
-		howManyDragons = Integer.valueOf(s.nextLine());
+		try {
+			howManyDragons = Integer.valueOf(s.nextLine());
+		}catch(Exception e) {
+			howManyDragons = 1;
+		}
 		board = new Board(boardSize, howManyDragons);
 		
-		do {
-			System.out.println("Qual a dificuldade que do Dragão: ");
-			System.out.println("1 - Dragão parado");
-			System.out.println("2 - Dragão com movimentação aleatória");
-			System.out.println("3 - Dragão com movimentação aleatória intercalada com dormir");
-			System.out.print("Opção: ");
-			dragonMoveType = Integer.valueOf(s.nextLine());
-		}while(dragonMoveType < 1 && dragonMoveType > 3);
-		
+		try {
+			do {
+				System.out.println("Qual a dificuldade que do Dragão: ");
+				System.out.println("1 - Dragão parado");
+				System.out.println("2 - Dragão com movimentação aleatória");
+				System.out.println("3 - Dragão com movimentação aleatória intercalada com dormir");
+				System.out.print("Opção (default:2): ");
+				dragonMoveType = Integer.valueOf(s.nextLine());
+			}while(dragonMoveType < 1 || dragonMoveType > 3);
+		}catch(Exception e) {
+			dragonMoveType = 2;
+		}
 		Dragon[] dragons = new Dragon[howManyDragons];
 		
 		for(int i = 0; i < howManyDragons; i++) {
@@ -44,20 +58,25 @@ public class Labyrinth {
 		} 
 		
 		hero = new Hero(board.charXPos('H',0),board.charYPos('H',0),'H');
+		//eagle = new Eagle(hero.getX(),hero.getY(),'B');
 		
 		do {
 			System.out.println("\n\n\n");
 			System.out.println(board);
 			System.out.print("\nw - Up   \ta - Left\ts - Down\td - Right\n\n"
 					+ "What is the direction you want to move your hero ?  (w/a/s/d) ");
-			heroNextMove = s.nextLine();
 			
+			heroNextMove = s.nextLine();
+
+			try {
 			moveChar(hero,heroNextMove.toLowerCase().charAt(0));
+			}catch(Exception e) {}
+			
 			for(int i = 0; i < dragons.length; i++) {
 				if(!isGameOver())
 					canKillDragon(dragons[i]);
 				if(!dragons[i].isSleeping() && !dragons[i].quietDragon() && !dragons[i].isDead()) {
-					putDragonToSpleep = r.nextInt(3);
+					putDragonToSpleep = r.nextInt(4);
 					if(putDragonToSpleep != 0) {
 						if(!dragons[i].isDead()) {
 							dragonNextMove = r.nextInt(4);
