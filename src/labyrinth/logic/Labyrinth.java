@@ -1,11 +1,13 @@
 package labyrinth.logic;
 
+import java.util.Random;
+
 public class Labyrinth {
 	
-	public Board board;
-	public Hero hero;
-	public Dragon[] dragons;
-	public Eagle eagle;
+	private Board board;
+	private Hero hero;
+	private Dragon[] dragons;
+	//private Eagle eagle;
 
 	private boolean win;
 	
@@ -20,10 +22,10 @@ public class Labyrinth {
 		} 
 		
 		hero = new Hero(board.charXPos('H',0),board.charYPos('H',0),'H');
-		eagle = new Eagle(hero.getX(),hero.getY(),'B');
+		//eagle = new Eagle(hero.getX(),hero.getY(),'B');
 	}
 
-	public void canKillDragon(Dragon dragon) {
+	private void canKillDragon(Dragon dragon) {
 		if(!dragon.isDead())
 			if(board.isCharNearBy(hero.getX(), hero.getY(), dragon.getSymbol()) && hero.hasSpade() && (dragon.getSymbol() == 'D' || dragon.getSymbol() == 'd')) {
 					dragon.kill();
@@ -31,7 +33,7 @@ public class Labyrinth {
 			}
 	}
 	
-	public void moveChar(Character c,char direction) { // w:up d:right s:down a:left
+	private void moveChar(Character c,char direction) { // w:up d:right s:down a:left
 		switch(direction) {
 		case 'w':
 			switch(board.charAboveOf(c.getX(),c.getY())) {
@@ -208,7 +210,7 @@ public class Labyrinth {
 		}
 	}
 	
-	public boolean isGameOver() {
+	public final boolean isGameOver() {
 		if(board.charXPos('S',0) == -1) {
 			win = true;
 			return true;
@@ -220,7 +222,52 @@ public class Labyrinth {
 		return false;
 	}
 	
-	public boolean playerWin() {
+	public final boolean playerWin() {
 		return win;
+	}
+	
+	public final Board getBoard() {
+		return board;
+	}
+	
+	public void nextMoves(String heroNextMove) {
+		Random r = new Random();
+		int putDragonToSpleep, dragonNextMove;
+		try {
+			moveChar(hero,heroNextMove.toLowerCase().charAt(0));
+		}catch(Exception e) {}
+		for(int i = 0; i < dragons.length; i++) {
+			if(!isGameOver())
+				canKillDragon(dragons[i]);
+			if(!dragons[i].isSleeping() && !dragons[i].quietDragon() && !dragons[i].isDead()) {
+				putDragonToSpleep = r.nextInt(4);
+				if(putDragonToSpleep != 0) {
+					if(!dragons[i].isDead()) {
+						dragonNextMove = r.nextInt(4);
+						switch(dragonNextMove) {
+						case 0:
+							moveChar(dragons[i],'w');
+							break;
+						case 1:
+							moveChar(dragons[i],'a');
+							break;
+						case 2:
+							moveChar(dragons[i],'s');
+							break;
+						case 3:
+							moveChar(dragons[i],'d');
+							break;
+						}
+					} 
+				}
+				else if(dragons[i].sleepyDragon() && !dragons[i].isDead()) {
+					dragons[i].goToSleep();
+					board.setCharAt(dragons[i].getX(), dragons[i].getY(), 'd');
+				}
+				
+			}
+			if(!isGameOver())
+				canKillDragon(dragons[i]);
+		}
 	}
 }
