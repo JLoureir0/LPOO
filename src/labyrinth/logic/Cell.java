@@ -1,3 +1,4 @@
+package labyrinth.logic;
 
 public class Cell {
 	private int x;

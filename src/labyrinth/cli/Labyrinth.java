@@ -1,53 +1,94 @@
+package labyrinth.cli;
+
 import java.util.Random;
 import java.util.Scanner;
+
+import labyrinth.logic.Board;
+import labyrinth.logic.Character;
+import labyrinth.logic.Dragon;
+import labyrinth.logic.Hero;
 
 
 public class Labyrinth {
 	
-	private static Board board = new Board(10);
-	private static Character hero = new Character(board.charXPos('H'),board.charYPos('H'),'H');
-	private static Character dragon = new Character(board.charXPos('D'),board.charYPos('D'),'D');
+	private static Board board;
+	private static Hero hero;
 	private static boolean win = false;
 	
 
 	public static void main(String[] args) {
 		String heroNextMove;
-		int dragonNextMove;
+		int boardSize, dragonNextMove, putDragonToSpleep, dragonMoveType, howManyDragons;
 		Scanner s = new Scanner(System.in);
 		Random r = new Random();
+		System.out.print("Qual o tamanho para o tabuleiro (min. 10): ");
+		boardSize = Integer.valueOf(s.nextLine());
+		System.out.print("Quantos dragões em campo(max. TamanhoTabuleiro/5): ");
+		howManyDragons = Integer.valueOf(s.nextLine());
+		board = new Board(boardSize, howManyDragons);
+		
+		do {
+			System.out.println("Qual a dificuldade que do Dragão: ");
+			System.out.println("1 - Dragão parado");
+			System.out.println("2 - Dragão com movimentação aleatória");
+			System.out.println("3 - Dragão com movimentação aleatória intercalada com dormir");
+			System.out.print("Opção: ");
+			dragonMoveType = Integer.valueOf(s.nextLine());
+		}while(dragonMoveType < 1 && dragonMoveType > 3);
+		
+		Dragon[] dragons = new Dragon[howManyDragons];
+		
+		for(int i = 0; i < howManyDragons; i++) {
+			Dragon dragon = new Dragon(board.charXPos('D',i),board.charYPos('D',i),'D',dragonMoveType);
+			dragons[i] = dragon;
+		} 
+		
+		hero = new Hero(board.charXPos('H',0),board.charYPos('H',0),'H');
+		
 		do {
 			System.out.println("\n\n\n");
-			board.printBoard();
+			System.out.println(board);
 			System.out.print("\nw - Up   \ta - Left\ts - Down\td - Right\n\n"
 					+ "What is the direction you want to move your hero ?  (w/a/s/d) ");
-					
 			heroNextMove = s.nextLine();
 			
 			moveChar(hero,heroNextMove.toLowerCase().charAt(0));
-			if(!isGameOver())
-				canKillDragon();
-			if(!dragon.isDead()) {
-				dragonNextMove = r.nextInt(4);
-				switch(dragonNextMove) {
-				case 0:
-					moveChar(dragon,'w');
-					break;
-				case 1:
-					moveChar(dragon,'a');
-					break;
-				case 2:
-					moveChar(dragon,'s');
-					break;
-				case 3:
-					moveChar(dragon,'d');
-					break;
+			for(int i = 0; i < dragons.length; i++) {
+				if(!isGameOver())
+					canKillDragon(dragons[i]);
+				if(!dragons[i].isSleeping() && !dragons[i].quietDragon() && !dragons[i].isDead()) {
+					putDragonToSpleep = r.nextInt(3);
+					if(putDragonToSpleep != 0) {
+						if(!dragons[i].isDead()) {
+							dragonNextMove = r.nextInt(4);
+							switch(dragonNextMove) {
+							case 0:
+								moveChar(dragons[i],'w');
+								break;
+							case 1:
+								moveChar(dragons[i],'a');
+								break;
+							case 2:
+								moveChar(dragons[i],'s');
+								break;
+							case 3:
+								moveChar(dragons[i],'d');
+								break;
+							}
+						} 
+					}
+					else if(dragons[i].sleepyDragon() && !dragons[i].isDead()) {
+						dragons[i].goToSleep();
+						board.setCharAt(dragons[i].getX(), dragons[i].getY(), 'd');
+					}
+					
 				}
+				if(!isGameOver())
+					canKillDragon(dragons[i]);
 			}
-			if(!isGameOver())
-				canKillDragon();			
 		}while(!isGameOver());
 		System.out.println("\n\n\n");
-		board.printBoard();
+		System.out.println(board);
 		s.close();
 		System.out.print("\n\nGAME OVER, you ");
 		if(win)
@@ -56,9 +97,9 @@ public class Labyrinth {
 			System.out.println("LOSE !!!");
 	}
 
-	private static void canKillDragon() {
+	private static void canKillDragon(Dragon dragon) {
 		if(!dragon.isDead())
-			if(board.isCharNearBy(hero.getX(), hero.getY(), dragon.getSymbol()) && hero.hasSpade()) {
+			if(board.isCharNearBy(hero.getX(), hero.getY(), dragon.getSymbol()) && hero.hasSpade() && (dragon.getSymbol() == 'D' || dragon.getSymbol() == 'd')) {
 					dragon.kill();
 					board.setCharAt(dragon.getX(), dragon.getY(), ' ');
 			}
@@ -242,12 +283,14 @@ public class Labyrinth {
 	}
 	
 	private static boolean isGameOver() {
-		if(board.charXPos('S') == -1) {
+		if(board.charXPos('S',0) == -1) {
 			win = true;
 			return true;
 		}
-		if(board.isCharNearBy(hero.getX(), hero.getY(), dragon.getSymbol()) && !hero.hasSpade())
+		if(board.isCharNearBy(hero.getX(), hero.getY(), 'D') && !hero.hasSpade()) {
+			board.setCharAt(hero.getX(), hero.getY(), ' ');
 			return true;
+		}
 		return false;
 	}
 }

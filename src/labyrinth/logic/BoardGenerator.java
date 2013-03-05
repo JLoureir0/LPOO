@@ -1,3 +1,4 @@
+package labyrinth.logic;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Random;
@@ -8,7 +9,7 @@ public class BoardGenerator {
 
 	private char[][]board;
 	
-	public char[][] nextBoard(int n) {
+	public char[][] nextBoard(int n, int howManyDragons) {
 		
 		board = new char[n][n];
 		fillBasicBoard();
@@ -19,7 +20,10 @@ public class BoardGenerator {
 		createExit();
 		
 		putPiecesInPos('H');
-		putPiecesInPos('D');
+		
+		for(int i = 0; i < howManyDragons; i++)
+			putPiecesInPos('D');
+		
 		putPiecesInPos('E');
 		
 		return board;
