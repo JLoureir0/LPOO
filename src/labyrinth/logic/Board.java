@@ -68,7 +68,7 @@ public class Board {
 	}
 	
 	public int charXPos(char c,int n) {
-		if(c == 'H' || c == 'D' || c == 'S') {
+		if(c == 'H' || c == 'D' || c == 'S' || c == 'B') {
 			for(int i = 0; i < board.length; i++) {
 				for(int j = 0; j < board.length; j++) {
 					if(board[i][j] == c && n == 0)
@@ -82,7 +82,7 @@ public class Board {
 	}
 	
 	public int charYPos(char c,int n) {
-		if(c == 'H' || c == 'D' || c == 'S') {
+		if(c == 'H' || c == 'D' || c == 'S' || c == 'B') {
 			for(int i = 0; i < board.length; i++) {
 				for(int j = 0; j < board.length; j++) {
 					if(board[i][j] == c && n == 0)

@@ -10,6 +10,13 @@ public class Hero extends Character {
 		symbol = 'A';
 	}
 	
+	public void handleEagle() {
+		if(symbol == 'H')
+			symbol = 'B';
+		else if(symbol == 'B')
+			symbol = 'H';
+	}
+	
 	public boolean hasSpade() {
 		if(symbol == 'A')
 			return true;
