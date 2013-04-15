@@ -4,6 +4,9 @@ import java.util.Collections;
 import java.util.Random;
 import java.util.Stack;
 
+/**
+ * Classe responsável pela criação de um tabuleiro aleatório com um tamanho n e um numero de dragões fixo
+ */
 
 public class BoardGenerator {
 
@@ -19,7 +22,7 @@ public class BoardGenerator {
 
 		createExit();
 		
-		putPiecesInPos('H');
+		putPiecesInPos('G');
 		
 		for(int i = 0; i < howManyDragons; i++)
 			putPiecesInPos('D');
@@ -152,7 +155,7 @@ public class BoardGenerator {
 		do {
 			x = r.nextInt(board.length-2)+1;
 			y = r.nextInt(board.length-2)+1;
-			if(board[x][y] == ' ' && !isCharNearBy(x, y, 'E') && !isCharNearBy(x, y, 'D') && !isCharNearBy(x, y, 'H')) {
+			if(board[x][y] == ' ' && !isCharNearBy(x, y, 'E') && !isCharNearBy(x, y, 'D') && !isCharNearBy(x, y, 'G')) {
 				board[x][y] = c;
 				validE = true;
 			}

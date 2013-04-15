@@ -1,6 +1,13 @@
 package labyrinth.logic;
 
-public abstract class Character {
+import java.io.Serializable;
+
+/**
+ * Classe mãe de todos os objectos que possam existir no tabuleiro
+ */
+public abstract class Character implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 	protected int x,y;
 	protected char symbol;
 	

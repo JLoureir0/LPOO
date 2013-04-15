@@ -1,10 +1,17 @@
 package labyrinth.logic;
 
-public class Board {
+import java.io.Serializable;
 
+/**
+ * Classe responsável pela representação do tabuleiro
+ */
+
+public class Board implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 	private char[][] board = new char[][] {
 		{ 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X' },
-		{ 'X', 'H', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X' },
+		{ 'X', 'G', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X' },
 		{ 'X', ' ', 'X', 'X', ' ', 'X', ' ', 'X', ' ', 'X' },
 		{ 'X', ' ', 'X', 'X', ' ', 'X', ' ', 'X', ' ', 'X' },
 		{ 'X', ' ', 'X', 'X', ' ', 'X', ' ', 'X', ' ', 'X' },
@@ -64,7 +71,7 @@ public class Board {
 	}
 	
 	public int charXPos(char c,int n) {
-		if(c == 'H' || c == 'D' || c == 'S' || c == 'B') {
+		if(c == 'H' || c == 'D' || c == 'S' || c == 'G' || c == 'E' || c == 'F') {
 			for(int i = 0; i < board.length; i++) {
 				for(int j = 0; j < board.length; j++) {
 					if(board[i][j] == c && n == 0)
@@ -78,7 +85,7 @@ public class Board {
 	}
 	
 	public int charYPos(char c,int n) {
-		if(c == 'H' || c == 'D' || c == 'S' || c == 'B') {
+		if(c == 'H' || c == 'D' || c == 'S' || c == 'G' || c == 'E' || c == 'F') {
 			for(int i = 0; i < board.length; i++) {
 				for(int j = 0; j < board.length; j++) {
 					if(board[i][j] == c && n == 0)

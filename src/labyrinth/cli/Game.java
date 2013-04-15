@@ -5,6 +5,10 @@ import java.util.Scanner;
 
 import labyrinth.logic.Labyrinth;
 
+/**
+ * Classe é responsável pela interface da linha de comandos do jogo
+ */
+
 public class Game {
 	public static void main(String[] args) {
 		Labyrinth labyrinth;		
@@ -47,8 +51,8 @@ public class Game {
 		do {
 			System.out.println("\n\n\n");
 			System.out.println(labyrinth.getBoard());
-			System.out.print("\nw - Up   \ta - Left\ts - Down\td - Right\n\n"
-					+ "What is the direction you want to move your hero ?  (w/a/s/d) ");
+			System.out.print("\nw - Up   \ta - Left\ts - Down\td - Right\nf - Fly\n\n"
+					+ "What is the direction you want to move your hero ? (w/a/s/d/f) ");
 			
 			heroNextMove = s.nextLine();
 			

@@ -2,8 +2,13 @@ package labyrinth.logic;
 
 import java.util.Random;
 
+/**
+ * Classe que armazena o estado do Dragão no tabuleiro: posição, tipo de movimento e se está vivo ou não
+ */
+
 public class Dragon extends Character{
 	
+	private static final long serialVersionUID = 1L;
 	private int random = 0;
 	private int moveType;
 	

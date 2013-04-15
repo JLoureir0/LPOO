@@ -1,13 +1,19 @@
 package labyrinth.logic;
 
+import java.io.Serializable;
 import java.util.Random;
 
-public class Labyrinth {
-	
+/**
+ * Classe que contém toda a lógica da movimentação das peças no tabuleiro
+ */
+
+public class Labyrinth implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 	private Board board;
 	private Hero hero;
 	private Dragon[] dragons;
-	//private Eagle eagle;
+	private Eagle eagle;
 
 	private boolean win;
 	
@@ -26,13 +32,26 @@ public class Labyrinth {
 			dragons[i] = dragon;
 		} 
 		
-		hero = new Hero(board.charXPos('H',0),board.charYPos('H',0),'H');
-		//eagle = new Eagle(hero.getX(),hero.getY(),'B');
+		hero = new Hero(board.charXPos('G',0),board.charYPos('G',0),'G');
+		eagle = new Eagle(hero.getX(),hero.getY(),'V');
+	}
+	
+	public Labyrinth(char[][] board, int howManyDragons, int dragonMoveType) {	
+		this.board = new Board(board);
+		dragons = new Dragon[howManyDragons];
+		
+		for(int i = 0; i < howManyDragons; i++) {
+			Dragon dragon = new Dragon(this.board.charXPos('D',i),this.board.charYPos('D',i),'D',dragonMoveType);
+			dragons[i] = dragon;
+		} 
+		
+		hero = new Hero(this.board.charXPos('G',0),this.board.charYPos('G',0),'G');
+		eagle = new Eagle(hero.getX(),hero.getY(),'V');
 	}
 
 	private void canKillDragon(Dragon dragon) {
 		if(!dragon.isDead())
-			if(board.isCharNearBy(hero.getX(), hero.getY(), dragon.getSymbol()) && hero.hasSpade() && (dragon.getSymbol() == 'D' || dragon.getSymbol() == 'd')) {
+			if(board.isCharNearBy(dragon.getX(), dragon.getY(), hero.getSymbol()) && hero.hasSpade() && (dragon.getSymbol() == 'D' || dragon.getSymbol() == 'd')) {
 					dragon.kill();
 					board.setCharAt(dragon.getX(), dragon.getY(), ' ');
 			}
@@ -52,13 +71,16 @@ public class Labyrinth {
 						board.setCharAt(c.getX()-1,c.getY(),c.getSymbol());
 						board.setCharAt(c.getX(),c.getY(),' ');	
 					}
+					if(c.getSymbol() == 'G')
+						eagle.moveUp();
 					c.moveUp();
 					break;
 				case 'E':
-					if(c.getSymbol() == 'H') {
+					if(c.getSymbol() == 'H' || c.getSymbol() == 'G') {
 						board.setCharAt(c.getX()-1, c.getY(), 'A');
 						board.setCharAt(c.getX(),c.getY(),' ');
-
+						if(c.getSymbol() == 'G')
+							eagle.moveUp();
 					}
 					if(c.getSymbol() == 'D') {
 						board.setCharAt(c.getX()-1, c.getY(), 'F');
@@ -78,7 +100,9 @@ public class Labyrinth {
 					if(c.hasSpade()) {
 						board.setCharAt(c.getX()-1, c.getY(), 'A');
 						board.setCharAt(c.getX(),c.getY(),' ');
-						c.moveLeft();	
+						c.moveLeft();
+						if(c.getSymbol() == 'G')
+							eagle.moveUp();
 					}
 					break;
 			}			
@@ -96,12 +120,16 @@ public class Labyrinth {
 						board.setCharAt(c.getX(),c.getY()+1,c.getSymbol());
 						board.setCharAt(c.getX(),c.getY(),' ');	
 					}
+					if(c.getSymbol() == 'G')
+						eagle.moveRight();
 					c.moveRight();
 					break;
 				case 'E':
-					if(c.getSymbol() == 'H') {
+					if(c.getSymbol() == 'H'|| c.getSymbol() == 'G') {
 						board.setCharAt(c.getX(), c.getY()+1, 'A');
 						board.setCharAt(c.getX(),c.getY(),' ');
+						if(c.getSymbol() == 'G')
+							eagle.moveRight();
 					}
 					if(c.getSymbol() == 'D') {
 						board.setCharAt(c.getX(), c.getY()+1, 'F');
@@ -122,6 +150,8 @@ public class Labyrinth {
 						board.setCharAt(c.getX(), c.getY()+1, 'A');
 						board.setCharAt(c.getX(),c.getY(),' ');
 						c.moveLeft();
+						if(c.getSymbol() == 'G')
+							eagle.moveRight();
 					}
 					break;
 			}			
@@ -139,12 +169,16 @@ public class Labyrinth {
 						board.setCharAt(c.getX()+1,c.getY(),c.getSymbol());
 						board.setCharAt(c.getX(),c.getY(),' ');	
 					}
+					if(c.getSymbol() == 'G')
+						eagle.moveDown();
 					c.moveDown();
 					break;
 				case 'E':
-					if(c.getSymbol() == 'H') {
+					if(c.getSymbol() == 'H' || c.getSymbol() == 'G') {
 						board.setCharAt(c.getX()+1, c.getY(), 'A');
 						board.setCharAt(c.getX(),c.getY(),' ');
+						if(c.getSymbol() == 'G')
+							eagle.moveDown();
 					}
 					if(c.getSymbol() == 'D') {
 						board.setCharAt(c.getX()+1, c.getY(), 'F');
@@ -165,6 +199,8 @@ public class Labyrinth {
 						board.setCharAt(c.getX()+1, c.getY(), 'A');
 						board.setCharAt(c.getX(),c.getY(),' ');
 						c.moveLeft();
+						if(c.getSymbol() == 'G')
+							eagle.moveDown();
 					}
 					break;
 			}
@@ -182,12 +218,16 @@ public class Labyrinth {
 						board.setCharAt(c.getX(),c.getY()-1,c.getSymbol());
 						board.setCharAt(c.getX(),c.getY(),' ');	
 					}
+					if(c.getSymbol() == 'G')
+						eagle.moveLeft();
 					c.moveLeft();
 					break;
 				case 'E':
-					if(c.getSymbol() == 'H') {
+					if(c.getSymbol() == 'H' || c.getSymbol() == 'G') {
 						board.setCharAt(c.getX(), c.getY()-1, 'A');
 						board.setCharAt(c.getX(),c.getY(),' ');
+						if(c.getSymbol() == 'G')
+							eagle.moveLeft();
 					}
 					if(c.getSymbol() == 'D') {
 						board.setCharAt(c.getX(), c.getY()-1, 'F');
@@ -208,9 +248,15 @@ public class Labyrinth {
 						board.setCharAt(c.getX(), c.getY()-1, 'A');
 						board.setCharAt(c.getX(),c.getY(),' ');
 						c.moveLeft();
+						if(c.getSymbol() == 'G')
+							eagle.moveLeft();
 					}
 					break;
 			}			
+			break;		
+		case 'f':
+			if(!eagle.isDead() && !eagle.isFlying() && hero.getSymbol() == 'G')
+				fly();
 			break;
 		}
 	}
@@ -220,7 +266,9 @@ public class Labyrinth {
 			win = true;
 			return true;
 		}
-		if(board.isCharNearBy(hero.getX(), hero.getY(), 'D') && !hero.hasSpade()) {
+		if(hero.isDead())
+			return true;
+		if((board.isCharNearBy(hero.getX(), hero.getY(), 'D')) && !hero.hasSpade()) {
 			board.setCharAt(hero.getX(), hero.getY(), ' ');
 			return true;
 		}
@@ -241,13 +289,17 @@ public class Labyrinth {
 		try {
 			moveChar(hero,heroNextMove.toLowerCase().charAt(0));
 		}catch(Exception e) {}
+		
+		if(eagle.isFlying())
+			eagleNextMove();
+		
 		for(int i = 0; i < dragons.length; i++) {
 			if(!isGameOver())
 				canKillDragon(dragons[i]);
 			if(!dragons[i].isSleeping() && !dragons[i].quietDragon() && !dragons[i].isDead()) {
-				putDragonToSpleep = r.nextInt(4);
-				if(putDragonToSpleep != 0) {
-					if(!dragons[i].isDead()) {
+				putDragonToSpleep = r.nextInt(10);
+				if(putDragonToSpleep != 0 || !dragons[i].sleepyDragon()) {
+					if(!dragons[i].isDead() || !isGameOver()) {
 						dragonNextMove = r.nextInt(4);
 						switch(dragonNextMove) {
 						case 0:
@@ -265,7 +317,7 @@ public class Labyrinth {
 						}
 					} 
 				}
-				else if(dragons[i].sleepyDragon() && !dragons[i].isDead()) {
+				else if(dragons[i].sleepyDragon()&& (board.charXPos('E', 0) != -1) && !dragons[i].isDead() && !isGameOver()) {
 					dragons[i].goToSleep();
 					board.setCharAt(dragons[i].getX(), dragons[i].getY(), 'd');
 				}
@@ -273,6 +325,102 @@ public class Labyrinth {
 			}
 			if(!isGameOver())
 				canKillDragon(dragons[i]);
+		}
+	}
+	
+	private void fly() {
+		eagle.fly();
+		hero.handleEagle();
+	}
+	
+	private void eagleNextMove() {
+		int xSpade = board.charXPos('E', 0), ySpade = board.charYPos('E', 0);
+		if(xSpade == -1) {
+			xSpade = board.charXPos('F', 0);
+			ySpade = board.charYPos('F', 0);
+		}
+		if(eagle.isFlying()) {
+			if(!eagle.hasSpade()) {
+				eagle.addPos(eagle.getX(), eagle.getY());
+				board.setCharAt(eagle.getX(), eagle.getY(), eagle.getPreviousChar());
+				if(eagle.getX() > xSpade && eagle.getY() > ySpade) {
+					eagle.moveUp();
+					eagle.moveLeft();
+					eagle.setPreviousChar(board.charAt(eagle.getX(), eagle.getY()));
+				}
+				else if(eagle.getX() > xSpade && eagle.getY() < ySpade) {
+					eagle.moveUp();
+					eagle.moveRight();
+					eagle.setPreviousChar(board.charAt(eagle.getX(), eagle.getY()));
+				}
+				else if(eagle.getX() < xSpade && eagle.getY() > ySpade) {
+					eagle.moveDown();
+					eagle.moveLeft();
+					eagle.setPreviousChar(board.charAt(eagle.getX(), eagle.getY()));
+				}
+				else if(eagle.getX() < xSpade && eagle.getY() < ySpade) {
+					eagle.moveDown();
+					eagle.moveRight();
+					eagle.setPreviousChar(board.charAt(eagle.getX(), eagle.getY()));
+				}
+				else if(eagle.getX() == xSpade && eagle.getY() != ySpade) {
+					if(eagle.getY() > ySpade)
+						eagle.moveLeft();
+					else
+						eagle.moveRight();
+					eagle.setPreviousChar(board.charAt(eagle.getX(), eagle.getY()));
+				}
+				else if(eagle.getX() != xSpade && eagle.getY() == ySpade) {
+					if(eagle.getX() > xSpade)
+						eagle.moveUp();
+					else
+						eagle.moveDown();
+					eagle.setPreviousChar(board.charAt(eagle.getX(), eagle.getY()));
+				}
+				if(eagle.getX() == xSpade && eagle.getY() == ySpade){
+					if(board.isCharNearBy(eagle.getX(), eagle.getY(), 'D') || board.charAt(eagle.getX(), eagle.getY()) == 'F')
+						eagle.kill();
+					else
+						eagle.handleSpade();
+				}
+				if(!eagle.isDead()) {
+					if(board.charAt(eagle.getX(), eagle.getY()) == ' ' || board.charAt(eagle.getX(), eagle.getY()) == 'E')
+						board.setCharAt(eagle.getX(), eagle.getY(), 'V');
+					if(board.charAt(eagle.getX(), eagle.getY()) == 'D')
+						board.setCharAt(eagle.getX(), eagle.getY(), 'Z');
+					if(board.charAt(eagle.getX(), eagle.getY()) == 'd')
+						board.setCharAt(eagle.getX(), eagle.getY(), 'z');
+					if(board.charAt(eagle.getX(), eagle.getY()) == 'X')
+						board.setCharAt(eagle.getX(), eagle.getY(), 'W');
+				}
+			}
+			else if(!eagle.isDead()) {
+				if(eagle.getPreviousChar() != 'E')
+					board.setCharAt(eagle.getX(), eagle.getY(), eagle.getPreviousChar());
+				else
+					board.setCharAt(eagle.getX(), eagle.getY(), ' ');
+				eagle.moveBack();
+				eagle.setPreviousChar(board.charAt(eagle.getX(), eagle.getY()));
+				if(board.charAt(eagle.getX(), eagle.getY()) == 'H'){
+					hero.handleSpade();
+					board.setCharAt(eagle.getX(), eagle.getY(), 'A');
+				}
+				else {
+					if(board.charAt(eagle.getX(), eagle.getY()) == ' ')
+						board.setCharAt(eagle.getX(), eagle.getY(), 'V');
+					if(board.charAt(eagle.getX(), eagle.getY()) == 'D')
+						board.setCharAt(eagle.getX(), eagle.getY(), 'Z');
+					if(board.charAt(eagle.getX(), eagle.getY()) == 'd')
+						board.setCharAt(eagle.getX(), eagle.getY(), 'z');
+					if(board.charAt(eagle.getX(), eagle.getY()) == 'X')
+						board.setCharAt(eagle.getX(), eagle.getY(), 'W');
+				}
+				if(eagle.isOrigin()) {
+					eagle.fly();
+					if(board.charAt(eagle.getX(), eagle.getY()) != 'A')
+						board.setCharAt(eagle.getX(), eagle.getY(), 'E');
+				}
+			}
 		}
 	}
 }
