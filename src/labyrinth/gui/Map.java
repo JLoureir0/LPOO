@@ -35,21 +35,21 @@ public class Map extends JPanel implements ActionListener, KeyListener{
 	private int fly;
 	private OptionWindow ow;
 	
-	private Image heroSword = new ImageIcon("C:\\git\\labyrinth-lpoo\\src\\firemario.png").getImage();
-	private Image wall = new ImageIcon("C:\\git\\labyrinth-lpoo\\src\\wall.png").getImage();
-	private Image dragon = new ImageIcon("C:\\git\\labyrinth-lpoo\\src\\bowser.png").getImage();
-	private Image eagle = new ImageIcon("C:\\git\\labyrinth-lpoo\\src\\yoshi.png").getImage();
-	private Image hero = new ImageIcon("C:\\git\\labyrinth-lpoo\\src\\mario.png").getImage();
-	private Image space = new ImageIcon("C:\\git\\labyrinth-lpoo\\src\\grass.png").getImage();
-	private Image spade = new ImageIcon("C:\\git\\labyrinth-lpoo\\src\\toadstool.png").getImage();
-	private Image exitNorth = new ImageIcon("C:\\git\\labyrinth-lpoo\\src\\pipe_north.png").getImage();
-	private Image exitSouth = new ImageIcon("C:\\git\\labyrinth-lpoo\\src\\pipe_south.png").getImage();
-	private Image exitEast = new ImageIcon("C:\\git\\labyrinth-lpoo\\src\\pipe_east.png").getImage();
-	private Image exitWest = new ImageIcon("C:\\git\\labyrinth-lpoo\\src\\pipe_west.png").getImage();
-	private Image armedBowser = new ImageIcon("C:\\git\\labyrinth-lpoo\\src\\armed_bowser.png").getImage();
-	private Image sleepyBowser = new ImageIcon("C:\\git\\labyrinth-lpoo\\src\\sleepy_bowser.png").getImage();
-	private Image won = new ImageIcon("C:\\git\\labyrinth-lpoo\\src\\won.png").getImage();
-	private Image lose = new ImageIcon("C:\\git\\labyrinth-lpoo\\src\\lose.png").getImage();
+	private Image heroSword = new ImageIcon("src\\firemario.png").getImage();
+	private Image wall = new ImageIcon("src\\wall.png").getImage();
+	private Image dragon = new ImageIcon("src\\bowser.png").getImage();
+	private Image eagle = new ImageIcon("src\\yoshi.png").getImage();
+	private Image hero = new ImageIcon("src\\mario.png").getImage();
+	private Image space = new ImageIcon("src\\grass.png").getImage();
+	private Image spade = new ImageIcon("src\\toadstool.png").getImage();
+	private Image exitNorth = new ImageIcon("src\\pipe_north.png").getImage();
+	private Image exitSouth = new ImageIcon("src\\pipe_south.png").getImage();
+	private Image exitEast = new ImageIcon("src\\pipe_east.png").getImage();
+	private Image exitWest = new ImageIcon("src\\pipe_west.png").getImage();
+	private Image armedBowser = new ImageIcon("src\\armed_bowser.png").getImage();
+	private Image sleepyBowser = new ImageIcon("src\\sleepy_bowser.png").getImage();
+	private Image won = new ImageIcon("src\\won.png").getImage();
+	private Image lose = new ImageIcon("src\\lose.png").getImage();
 	
 	public Map(OptionWindow ow) {
 		this.ow = ow;
@@ -82,6 +82,12 @@ public class Map extends JPanel implements ActionListener, KeyListener{
 		addKeyListener(this);
 	}
 	
+	/**
+	 * Desenha no painel o jogo
+	 * @param g graficos do painel
+	 * 
+	 */
+	
 	public void paint(Graphics g) {
 		super.paint(g);
 		Image draw = createImage((iconSize*labSize),(iconSize*labSize));
@@ -103,6 +109,12 @@ public class Map extends JPanel implements ActionListener, KeyListener{
 			//System.exit(0);
 		}
 	}
+	
+	/**
+	 * Desenha uma imagem com todos os objectos do tabuleiro para ser redimensionada posteriormente
+	 * @param g graficos da imagem
+	 * 
+	 */
 	
 	public void drawImage(Graphics g) {
 		Board board = labyrinth.getBoard();

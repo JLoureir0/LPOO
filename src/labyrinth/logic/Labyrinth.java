@@ -59,7 +59,11 @@ public class Labyrinth implements Serializable{
 		hero = new Hero(this.board.charXPos('G',0),this.board.charYPos('G',0),'G');
 		eagle = new Eagle(hero.getX(),hero.getY(),'V');
 	}
-
+	
+	/**
+	 * Verifica se pode matar o dragão.
+	 * @param dragon dragao a verificar
+	 */
 	private void canKillDragon(Dragon dragon) {
 		if(!dragon.isDead())
 			if(board.isCharNearBy(dragon.getX(), dragon.getY(), hero.getSymbol()) && hero.hasSpade() && (dragon.getSymbol() == 'D' || dragon.getSymbol() == 'd')) {
@@ -68,6 +72,12 @@ public class Labyrinth implements Serializable{
 			}
 	}
 	
+	
+	/**
+	 * Funçao genérica para mover as peças no tabuleiro à excepção da águia
+	 * @param c peça a mover
+	 * @param direction direcção para a qual se pretende mover a peça
+	 */
 	private void moveChar(Character c,char direction) { // w:up d:right s:down a:left
 		switch(direction) {
 		case 'w':
@@ -272,6 +282,7 @@ public class Labyrinth implements Serializable{
 		}
 	}
 	
+	
 	public final boolean isGameOver() {
 		if(board.charXPos('S',0) == -1) {
 			win = true;
@@ -293,6 +304,11 @@ public class Labyrinth implements Serializable{
 	public final Board getBoard() {
 		return board;
 	}
+	
+	/**
+	 * Função que trata do proximo estado do jogo, tratando de todas as peças
+	 * @param heroNextMove Proxima opção tomada pelo utilizador
+	 */
 	
 	public void nextMoves(String heroNextMove) {
 		Random r = new Random();
@@ -343,6 +359,10 @@ public class Labyrinth implements Serializable{
 		eagle.fly();
 		hero.handleEagle();
 	}
+	
+	/**
+	 * Função que trata única e exclusivamente do movimento da águia
+	 */
 	
 	private void eagleNextMove() {
 		int xSpade = board.charXPos('E', 0), ySpade = board.charYPos('E', 0);

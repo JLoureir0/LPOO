@@ -45,7 +45,7 @@ public class MainWindow extends JFrame {
 	}
 
 	/**
-	 * Create the frame.
+	 * Cria a frame e adiciona todos os componentes bem como os seus listeners
 	 */
 	public MainWindow() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

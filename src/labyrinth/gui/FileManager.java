@@ -17,7 +17,12 @@ public class FileManager {
 	public FileManager() {
 	}
 	
-
+	
+	/**
+	 * Grava o estado actual do jogo.
+	 * @param lab labirinto a ser gravado
+	 * @param path caminho para onde gravar o ficheiro
+	 */
 	public void saveFile(Labyrinth lab, String path) {
 		   try{
 				FileOutputStream fout = new FileOutputStream(path);
@@ -29,6 +34,11 @@ public class FileManager {
 			   }
 	}
 	
+	/**
+	 * Carrega o estado do jogo gravado num ficheiro.
+	 * @param path caminho de onde carrega o ficheiro
+	 * @return devolve o labirinto gravado no ficheiro
+	 */
 	public Labyrinth loadFile(String path) {
 		   try{
 			   

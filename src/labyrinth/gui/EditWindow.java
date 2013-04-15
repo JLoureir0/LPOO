@@ -28,14 +28,14 @@ public class EditWindow extends JFrame {
 	private int tool;
 	private int labSize;
 	char board[][];
-	private ImageIcon wall = new ImageIcon("C:\\git\\labyrinth-lpoo\\src\\wall.png");
-	private ImageIcon dragon = new ImageIcon("C:\\git\\labyrinth-lpoo\\src\\bowser.png");
-	private ImageIcon hero = new ImageIcon("C:\\git\\labyrinth-lpoo\\src\\mario.png");
-	private ImageIcon spade = new ImageIcon("C:\\git\\labyrinth-lpoo\\src\\toadstool.png");
-	private ImageIcon exitNorth = new ImageIcon("C:\\git\\labyrinth-lpoo\\src\\pipe_north.png");
-	private ImageIcon exitSouth = new ImageIcon("C:\\git\\labyrinth-lpoo\\src\\pipe_south.png");
-	private ImageIcon exitEast = new ImageIcon("C:\\git\\labyrinth-lpoo\\src\\pipe_east.png");
-	private ImageIcon exitWest = new ImageIcon("C:\\git\\labyrinth-lpoo\\src\\pipe_west.png");
+	private ImageIcon wall = new ImageIcon("src\\wall.png");
+	private ImageIcon dragon = new ImageIcon("src\\bowser.png");
+	private ImageIcon hero = new ImageIcon("src\\mario.png");
+	private ImageIcon spade = new ImageIcon("src\\toadstool.png");
+	private ImageIcon exitNorth = new ImageIcon("src\\pipe_north.png");
+	private ImageIcon exitSouth = new ImageIcon("src\\pipe_south.png");
+	private ImageIcon exitEast = new ImageIcon("src\\pipe_east.png");
+	private ImageIcon exitWest = new ImageIcon("src\\pipe_west.png");
 	JButton buttonBoard[][];
 
 
@@ -119,6 +119,11 @@ public class EditWindow extends JFrame {
 		contentPane.add(panel_1, BorderLayout.CENTER);
 		draw(ow);
 	}
+	
+	/**
+	 * Desenha o editor do labirinto
+	 * @param ow Janela de Opções, para poder ter acesso às caracteristicas do labirinto
+	 */
 	
 	public void draw(OptionWindow ow) {
 		labSize = ow.getLabSize();

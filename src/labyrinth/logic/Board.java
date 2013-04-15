@@ -70,6 +70,12 @@ public class Board implements Serializable{
 		return ret;
 	}
 	
+	/**
+	 * Procura a coordenada x de um caracter no tabuleiro.
+	 * @param c Caracter a procurar.
+	 * @param n Numero de caracteres daquele tipo a ignorar.
+	 * @return coordenada X do caracter
+	 */
 	public int charXPos(char c,int n) {
 		if(c == 'H' || c == 'D' || c == 'S' || c == 'G' || c == 'E' || c == 'F') {
 			for(int i = 0; i < board.length; i++) {
@@ -84,6 +90,12 @@ public class Board implements Serializable{
 		return -1;
 	}
 	
+	/**
+	 * Procura a coordenada y de um caracter no tabuleiro.
+	 * @param c Caracter a procurar.
+	 * @param n Numero de caracteres daquele tipo a ignorar.
+	 * @return coordenada Y do caracter
+	 */	
 	public int charYPos(char c,int n) {
 		if(c == 'H' || c == 'D' || c == 'S' || c == 'G' || c == 'E' || c == 'F') {
 			for(int i = 0; i < board.length; i++) {
