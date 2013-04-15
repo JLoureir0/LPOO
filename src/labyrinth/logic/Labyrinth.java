@@ -36,6 +36,17 @@ public class Labyrinth implements Serializable{
 		eagle = new Eagle(hero.getX(),hero.getY(),'V');
 	}
 	
+	public Labyrinth() {
+		
+		board = new Board();
+		dragons = new Dragon[1];
+		Dragon dragon = new Dragon(board.charXPos('D',0),board.charYPos('D',0),'D',1);
+		dragons[0] = dragon;
+		
+		hero = new Hero(board.charXPos('G',0),board.charYPos('G',0),'G');
+		eagle = new Eagle(hero.getX(),hero.getY(),'V');
+	}
+	
 	public Labyrinth(char[][] board, int howManyDragons, int dragonMoveType) {	
 		this.board = new Board(board);
 		dragons = new Dragon[howManyDragons];
