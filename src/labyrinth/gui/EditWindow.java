@@ -28,14 +28,14 @@ public class EditWindow extends JFrame {
 	private int tool;
 	private int labSize;
 	char board[][];
-	private ImageIcon wall = new ImageIcon("src\\wall.png");
-	private ImageIcon dragon = new ImageIcon("src\\bowser.png");
-	private ImageIcon hero = new ImageIcon("src\\mario.png");
-	private ImageIcon spade = new ImageIcon("src\\toadstool.png");
-	private ImageIcon exitNorth = new ImageIcon("src\\pipe_north.png");
-	private ImageIcon exitSouth = new ImageIcon("src\\pipe_south.png");
-	private ImageIcon exitEast = new ImageIcon("src\\pipe_east.png");
-	private ImageIcon exitWest = new ImageIcon("src\\pipe_west.png");
+	private ImageIcon wall = new ImageIcon(MainWindow.class.getResource("/wall.png"));
+	private ImageIcon dragon = new ImageIcon(MainWindow.class.getResource("/bowser.png"));
+	private ImageIcon hero = new ImageIcon(MainWindow.class.getResource("/mario.png"));
+	private ImageIcon spade = new ImageIcon(MainWindow.class.getResource("/toadstool.png"));
+	private ImageIcon exitNorth = new ImageIcon(MainWindow.class.getResource("/pipe_north.png"));
+	private ImageIcon exitSouth = new ImageIcon(MainWindow.class.getResource("/pipe_south.png"));
+	private ImageIcon exitEast = new ImageIcon(MainWindow.class.getResource("/pipe_east.png"));
+	private ImageIcon exitWest = new ImageIcon(MainWindow.class.getResource("/pipe_west.png"));
 	JButton buttonBoard[][];
 
 

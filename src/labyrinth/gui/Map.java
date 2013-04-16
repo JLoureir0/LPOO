@@ -35,21 +35,20 @@ public class Map extends JPanel implements ActionListener, KeyListener{
 	private int fly;
 	private OptionWindow ow;
 	
-	private Image heroSword = new ImageIcon("src\\firemario.png").getImage();
-	private Image wall = new ImageIcon("src\\wall.png").getImage();
-	private Image dragon = new ImageIcon("src\\bowser.png").getImage();
-	private Image eagle = new ImageIcon("src\\yoshi.png").getImage();
-	private Image hero = new ImageIcon("src\\mario.png").getImage();
-	private Image space = new ImageIcon("src\\grass.png").getImage();
-	private Image spade = new ImageIcon("src\\toadstool.png").getImage();
-	private Image exitNorth = new ImageIcon("src\\pipe_north.png").getImage();
-	private Image exitSouth = new ImageIcon("src\\pipe_south.png").getImage();
-	private Image exitEast = new ImageIcon("src\\pipe_east.png").getImage();
-	private Image exitWest = new ImageIcon("src\\pipe_west.png").getImage();
-	private Image armedBowser = new ImageIcon("src\\armed_bowser.png").getImage();
-	private Image sleepyBowser = new ImageIcon("src\\sleepy_bowser.png").getImage();
-	private Image won = new ImageIcon("src\\won.png").getImage();
-	private Image lose = new ImageIcon("src\\lose.png").getImage();
+	private Image heroSword = new ImageIcon(MainWindow.class.getResource("/firemario.png")).getImage();
+	private Image wall = new ImageIcon(MainWindow.class.getResource("/wall.png")).getImage();
+	private Image dragon = new ImageIcon(MainWindow.class.getResource("/bowser.png")).getImage();
+	private Image eagle = new ImageIcon(MainWindow.class.getResource("/yoshi.png")).getImage();
+	private Image hero = new ImageIcon(MainWindow.class.getResource("/mario.png")).getImage();
+	private Image spade = new ImageIcon(MainWindow.class.getResource("/toadstool.png")).getImage();
+	private Image exitNorth = new ImageIcon(MainWindow.class.getResource("/pipe_north.png")).getImage();
+	private Image exitSouth = new ImageIcon(MainWindow.class.getResource("/pipe_south.png")).getImage();
+	private Image exitEast = new ImageIcon(MainWindow.class.getResource("/pipe_east.png")).getImage();
+	private Image exitWest = new ImageIcon(MainWindow.class.getResource("/pipe_west.png")).getImage();
+	private Image armedBowser = new ImageIcon(MainWindow.class.getResource("/armed_bowser.png")).getImage();
+	private Image sleepyBowser = new ImageIcon(MainWindow.class.getResource("/sleepy_bowser.png")).getImage();
+	private Image won = new ImageIcon(MainWindow.class.getResource("/won.png")).getImage();
+	private Image lose = new ImageIcon(MainWindow.class.getResource("/lose.png")).getImage();
 	
 	public Map(OptionWindow ow) {
 		this.ow = ow;
@@ -123,9 +122,6 @@ public class Map extends JPanel implements ActionListener, KeyListener{
 			for(int j = 0; j < labSize; j++) {
 				c = board.charAt(j, i);
 				switch(c) {
-				case ' ':
-					g.drawImage(space,i*iconSize,j*iconSize,null);
-					break;
 				case 'G':
 					g.drawImage(hero,i*iconSize,j*iconSize,null);
 					break;
